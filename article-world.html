@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Climate Summit 2025 - Digital Daily News</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Digital Daily News</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="article-world.html">World</a>
+      <a href="article-sports.html">Sports</a>
+      <a href="article-tech.html">Tech</a>
+      <a href="#">Entertainment</a>
+    </div>
+  </nav>
+
+  <!-- Breaking News Banner -->
+  <div class="breaking-news">
+    <span class="title">Global Headlines:</span>
+    <div class="news-ticker" id="news-ticker">Loading latest updates...</div>
+  </div>
+
+  <!-- Article Content -->
+  <main class="article-container">
+    <h1>Global Climate Summit 2025 Concludes in Paris</h1>
+    <p class="meta">By Sarah Williams | April 10, 2025</p>
+    <img src="images/world-news.jpg" alt="Global Climate Summit 2025">
+    <p>
+      World leaders gathered in Paris this week for the Global Climate Summit 2025 to address the escalating impact of climate change.
+      The summit concluded with new global commitments to reduce carbon emissions by 45% by 2030.
+    </p>
+    <p>
+      Representatives from over 180 countries signed a landmark agreement that includes stricter emission targets and financial support for developing nations.
+      The U.N. Secretary-General called it a “turning point for global environmental action.”
+    </p>
+    <p>
+      Renewable energy investment and sustainable technologies were key highlights of the summit, signaling a shift toward a cleaner and greener future.
+    </p>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Back to Home</button>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Digital Daily News. All rights reserved.
+  </footer>
+
+  <!-- Live News Script -->
+  <script>
+    const ticker = document.getElementById("news-ticker");
+    const apiKey = "YOUR_API_KEY_HERE"; // Replace with your News API key
+    const url = `https://newsapi.org/v2/top-headlines?category=general&language=en&apiKey=${apiKey}`;
+
+    async function fetchHeadlines() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const articles = data.articles.slice(0, 7);
+        let index = 0;
+
+        function updateTicker() {
+          if (articles.length > 0) {
+            ticker.textContent = "🌍 " + articles[index].title;
+            ticker.classList.remove("fade-in");
+            void ticker.offsetWidth;
+            ticker.classList.add("fade-in");
+            index = (index + 1) % articles.length;
+          } else {
+            ticker.textContent = "No world news available.";
+          }
+        }
+
+        updateTicker();
+        setInterval(updateTicker, 5000);
+      } catch (error) {
+        ticker.textContent = "⚠️ Unable to load world headlines.";
+        console.error("Error fetching world news:", error);
+      }
+    }
+
+    fetchHeadlines();
+  </script>
+
+</body>
+</html>
