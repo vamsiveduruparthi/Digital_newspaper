@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Revolution in Tech Industry - Digital Daily News</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Digital Daily News</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="article-world.html">World</a>
+      <a href="article-sports.html">Sports</a>
+      <a href="article-tech.html">Tech</a>
+      <a href="#">Entertainment</a>
+    </div>
+  </nav>
+
+  <!-- Modern Breaking News Banner -->
+  <div class="breaking-news">
+    <span class="title">Latest News:</span>
+    <div class="news-ticker" id="news-ticker">Loading latest headlines...</div>
+  </div>
+
+  <!-- Article Content -->
+  <main class="article-container">
+    <h1>AI Revolution in Tech Industry</h1>
+    <p class="meta">By John Smith | April 10, 2025</p>
+    <img src="images/tech-news.jpg" alt="AI Technology">
+    <p>
+      Artificial Intelligence (AI) continues to transform industries across the globe.
+      From healthcare to finance, AI is enabling automation, precision, and innovation at a scale never seen before.
+    </p>
+    <p>
+      Companies like Google, OpenAI, and Microsoft are pushing boundaries with advanced language models and machine learning systems
+      that are capable of reasoning, creativity, and problem-solving.
+    </p>
+    <p>
+      Experts predict that by 2030, AI-driven automation could contribute up to $15 trillion to the global economy.
+      However, concerns about ethics, data privacy, and employment remain key discussion points.
+    </p>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Back to Home</button>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Digital Daily News. All rights reserved.
+  </footer>
+
+  <!-- Live News Script -->
+  <script>
+    const ticker = document.getElementById("news-ticker");
+    const apiKey = "YOUR_API_KEY_HERE"; // Replace with your key
+    const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}`;
+
+    async function fetchHeadlines() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const articles = data.articles.slice(0, 7);
+        let index = 0;
+
+        function updateTicker() {
+          if (articles.length > 0) {
+            ticker.textContent = "📰 " + articles[index].title;
+            ticker.classList.remove("fade-in");
+            void ticker.offsetWidth;
+            ticker.classList.add("fade-in");
+            index = (index + 1) % articles.length;
+          } else {
+            ticker.textContent = "No news available.";
+          }
+        }
+
+        updateTicker();
+        setInterval(updateTicker, 5000);
+      } catch (error) {
+        ticker.textContent = "⚠️ Unable to load live news.";
+        console.error("Error fetching news:", error);
+      }
+    }
+
+    fetchHeadlines();
+  </script>
+
+</body>
+</html>
