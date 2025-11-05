@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Daily News</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Digital Daily News</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="article-world.html">World</a>
+      <a href="article-sports.html">Sports</a>
+      <a href="article-tech.html">Tech</a>
+      <a href="#">Entertainment</a>
+    </div>
+  </nav>
+
+  <!-- Modern Breaking News Banner -->
+  <div class="breaking-news">
+    <span class="title">Latest News:</span>
+    <div class="news-ticker" id="news-ticker">
+      Loading latest headlines...
+    </div>
+  </div>
+
+  <!-- Main News Section -->
+  <main class="articles">
+    <div class="card">
+      <img src="images/tech-news.jpg" alt="Technology News">
+      <h2><a href="article-tech.html">AI Revolution in Tech Industry</a></h2>
+      <p>Artificial Intelligence is transforming industries across the globe, enabling smarter, faster, and more efficient systems.</p>
+    </div>
+
+    <div class="card">
+      <img src="images/sports-news.jpg" alt="Sports News">
+      <h2><a href="article-sports.html">India Wins Cricket World Cup 2025</a></h2>
+      <p>India lifts the ICC Cricket World Cup trophy after a thrilling match, making history in world cricket once again.</p>
+    </div>
+
+    <div class="card">
+      <img src="images/world-news.jpg" alt="World News">
+      <h2><a href="article-world.html">Global Summit 2025: Key Outcomes</a></h2>
+      <p>World leaders gathered in Paris to discuss climate change, green technology, and sustainable economic growth.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Digital Daily News. All rights reserved.
+  </footer>
+
+  <!-- Live News Ticker Script -->
+  <script>
+    const ticker = document.getElementById("news-ticker");
+    const apiKey = "YOUR_API_KEY_HERE"; // 🔑 Replace with your NewsAPI.org key
+    const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}`;
+
+    async function fetchHeadlines() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const articles = data.articles.slice(0, 7);
+        let index = 0;
+
+        function updateTicker() {
+          if (articles.length > 0) {
+            ticker.textContent = "📰 " + articles[index].title;
+            ticker.classList.remove("fade-in");
+            void ticker.offsetWidth;
+            ticker.classList.add("fade-in");
+            index = (index + 1) % articles.length;
+          } else {
+            ticker.textContent = "No news available at the moment.";
+          }
+        }
+
+        updateTicker();
+        setInterval(updateTicker, 5000);
+      } catch (error) {
+        ticker.textContent = "⚠️ Unable to load live news.";
+        console.error("Error fetching news:", error);
+      }
+    }
+
+    fetchHeadlines();
+  </script>
+
+</body>
+</html>
