@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India Wins the Cricket World Cup 2025 - Digital Daily News</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Digital Daily News</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="article-world.html">World</a>
+      <a href="article-sports.html">Sports</a>
+      <a href="article-tech.html">Tech</a>
+      <a href="#">Entertainment</a>
+    </div>
+  </nav>
+
+  <!-- Breaking News Banner -->
+  <div class="breaking-news">
+    <span class="title">Latest Sports Headlines:</span>
+    <div class="news-ticker" id="news-ticker">Loading latest updates...</div>
+  </div>
+
+  <!-- Article Content -->
+  <main class="article-container">
+    <h1>India Wins the Cricket World Cup 2025</h1>
+    <p class="meta">By Rahul Mehta | March 30, 2025</p>
+    <img src="images/sports-news.jpg" alt="Cricket World Cup 2025">
+    <p>
+      India lifted the ICC Cricket World Cup 2025 after defeating Australia in a thrilling final match at the Wankhede Stadium, Mumbai.
+      The nation erupted in celebration as Rohit Sharma led the team to victory with a record-breaking century.
+    </p>
+    <p>
+      Chasing 280, India reached the target in 47.3 overs with 6 wickets remaining.
+      Player of the Tournament went to Virat Kohli for his consistent performance throughout the series.
+    </p>
+    <p>
+      This marks India’s third World Cup title, reaffirming their dominance in world cricket.
+      The final saw packed stadiums, fireworks, and emotional moments from fans across the country.
+    </p>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Back to Home</button>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Digital Daily News. All rights reserved.
+  </footer>
+
+  <!-- Live News Script -->
+  <script>
+    const ticker = document.getElementById("news-ticker");
+    const apiKey = "YOUR_API_KEY_HERE"; // Replace with your News API key
+    const url = `https://newsapi.org/v2/top-headlines?category=sports&country=in&apiKey=${apiKey}`;
+
+    async function fetchHeadlines() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const articles = data.articles.slice(0, 7);
+        let index = 0;
+
+        function updateTicker() {
+          if (articles.length > 0) {
+            ticker.textContent = "🏆 " + articles[index].title;
+            ticker.classList.remove("fade-in");
+            void ticker.offsetWidth;
+            ticker.classList.add("fade-in");
+            index = (index + 1) % articles.length;
+          } else {
+            ticker.textContent = "No sports news available.";
+          }
+        }
+
+        updateTicker();
+        setInterval(updateTicker, 5000);
+      } catch (error) {
+        ticker.textContent = "⚠️ Unable to load sports headlines.";
+        console.error("Error fetching sports news:", error);
+      }
+    }
+
+    fetchHeadlines();
+  </script>
+
+</body>
+</html>
